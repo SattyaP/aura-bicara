@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 function Login() {
   const navigate = useNavigate();
@@ -42,57 +42,88 @@ function Login() {
   };
 
   return (
-    <main className="grid min-h-screen place-items-center bg-slate-50 p-4">
-      <section className="surface-card w-full max-w-md p-7 md:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">AuraBicara</p>
-        <h1 className="mt-3 font-display text-3xl font-bold text-slate-900">Welcome back</h1>
-        <p className="mt-2 text-sm text-slate-500">Sign in to continue your speaking performance tracking.</p>
+    <main className="min-h-screen text-slate-800">
+      <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
+        <section className="relative hidden overflow-hidden bg-slate-900 lg:flex lg:flex-col lg:justify-between lg:p-10 2xl:p-14">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute left-10 top-16 h-52 w-52 rounded-full bg-teal-400/35 blur-3xl" />
+            <div className="absolute right-14 top-44 h-64 w-64 rounded-full bg-orange-300/25 blur-3xl" />
+          </div>
 
-        <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
-          <label htmlFor="email" className="grid gap-2 text-sm text-slate-700">
-            <span>Email</span>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/30"
-            />
-          </label>
+          <div className="relative">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-teal-200">AuraBicara</p>
+            <h1 className="mt-4 max-w-lg font-display text-5xl font-bold leading-tight text-white">
+              Professional Presentation Coaching Workspace
+            </h1>
+            <p className="mt-5 max-w-lg text-base text-slate-200">
+              Practice with confidence and evaluate speaking quality with production-grade AI analysis.
+            </p>
+          </div>
 
-          <label htmlFor="password" className="grid gap-2 text-sm text-slate-700">
-            <span>Password</span>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={form.password}
-              onChange={handleChange}
-              required
-              className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/30"
-            />
-          </label>
+          <ul className="relative grid gap-3 text-sm text-slate-100">
+            <li className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">Camera recording and upload in one workflow</li>
+            <li className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">Live pace, filler words, and eye contact scoring</li>
+            <li className="rounded-xl border border-white/20 bg-white/10 px-4 py-3">Fast reports for training and review sessions</li>
+          </ul>
+        </section>
 
-          {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+        <section className="flex items-center px-4 py-6 sm:px-8 lg:px-12 2xl:px-20">
+          <div className="w-full space-y-6">
+            <section className="surface-card p-7 sm:p-9 rise-in">
+              <p className="eyebrow-label">Secure Access</p>
+              <h2 className="mt-3 font-display text-3xl font-bold text-slate-900">Welcome back</h2>
+              <p className="mt-2 text-sm text-slate-500">Sign in to continue your speaking performance tracking.</p>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-indigo-300"
-          >
-            {isSubmitting ? 'Signing in...' : 'Login'}
-          </button>
-        </form>
+              <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
+                <label htmlFor="email" className="grid gap-2 text-sm text-slate-700">
+                  <span>Email</span>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    className="input-shell"
+                  />
+                </label>
 
-        <p className="mt-6 text-sm text-slate-500">
-          Do not have an account?{' '}
-          <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-700">
-            Create one
-          </Link>
-        </p>
-      </section>
+                <label htmlFor="password" className="grid gap-2 text-sm text-slate-700">
+                  <span>Password</span>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                    className="input-shell"
+                  />
+                </label>
+
+                {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="button-brand w-full"
+                >
+                  {isSubmitting ? 'Signing in...' : 'Login'}
+                </button>
+              </form>
+
+              <p className="mt-6 text-sm text-slate-500">
+                Do not have an account?{' '}
+                <Link to="/register" className="font-semibold text-teal-700 hover:text-teal-800">
+                  Create one
+                </Link>
+              </p>
+            </section>
+
+            <p className="text-center text-xs text-slate-500">Secure JWT authentication • Session protected API access</p>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

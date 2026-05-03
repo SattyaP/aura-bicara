@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import axiosInstance from '../api/axiosInstance';
-
-const AuthContext = createContext(null);
+import { AuthContext } from './authContextObject';
 
 export function AuthProvider({ children }) {
     const [accessToken, setAccessToken] = useState(() => localStorage.getItem('access_token'));
@@ -48,14 +47,14 @@ export function AuthProvider({ children }) {
         };
     }, [accessToken]);
 
-    const login = (token, userData = null) => {
+    const login = useCallback((token, userData = null) => {
         localStorage.setItem('access_token', token);
         setAccessToken(token);
         setUser(userData);
         setIsLoadingAuth(false);
-    };
+    }, []);
 
-    const logout = async () => {
+    const logout = useCallback(async () => {
         try {
             if (accessToken) {
                 await axiosInstance.post('/logout');
@@ -68,7 +67,7 @@ export function AuthProvider({ children }) {
         setAccessToken(null);
         setUser(null);
         setIsLoadingAuth(false);
-    };
+    }, [accessToken]);
 
     const value = useMemo(
         () => ({
@@ -80,18 +79,8 @@ export function AuthProvider({ children }) {
             logout,
             setUser,
         }),
-        [accessToken, user, isLoadingAuth],
+        [accessToken, user, isLoadingAuth, login, logout],
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-    const context = useContext(AuthContext);
-
-    if (!context) {
-        throw new Error('useAuth must be used inside AuthProvider.');
-    }
-
-    return context;
 }

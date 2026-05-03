@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    'Bricolage Grotesque', 'Hanken Grotesk', ui-sans-serif, system-ui,
+    sans-serif;
 }
 
 @layer base {
@@ -14,16 +16,77 @@
   }
 
   body {
-    @apply bg-slate-50 font-sans text-slate-700 antialiased;
+    @apply font-sans text-slate-700 antialiased;
+    background-color: #edf5f5;
+    background-image:
+      radial-gradient(
+        circle at 12% 10%,
+        rgba(13, 148, 136, 0.16),
+        transparent 24rem
+      ),
+      radial-gradient(
+        circle at 88% 18%,
+        rgba(249, 115, 22, 0.15),
+        transparent 22rem
+      ),
+      linear-gradient(180deg, #f8fbfb 0%, #eff6f6 52%, #e8f0f0 100%);
   }
 }
 
 @layer utilities {
   .surface-card {
-    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+    @apply rounded-3xl border border-white/70 bg-white/86 shadow-[0_2px_6px_rgba(15,23,42,0.04),0_22px_48px_rgba(15,23,42,0.08)] backdrop-blur-sm;
   }
 
   .surface-card-hover {
-    @apply transition-shadow duration-200 hover:shadow-md;
+    @apply transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_4px_10px_rgba(15,23,42,0.05),0_28px_58px_rgba(15,23,42,0.1)];
   }
+
+  .eyebrow-label {
+    @apply text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-slate-500;
+  }
+
+  .button-brand {
+    @apply inline-flex items-center justify-center rounded-2xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_28px_rgba(15,118,110,0.3)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-800 disabled:cursor-not-allowed disabled:bg-teal-300;
+  }
+
+  .button-soft {
+    @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white/95 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:border-slate-300 hover:bg-white disabled:cursor-not-allowed disabled:text-slate-400;
+  }
+
+  .input-shell {
+    @apply rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-700/20;
+  }
+
+  .rise-in {
+    animation: riseIn 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .rise-in-delay-2 {
+    animation-delay: 90ms;
+  }
+
+  .rise-in-delay-3 {
+    animation-delay: 180ms;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+video {
+  transform: scaleX(-1);
+}
+
+video::-webkit-media-controls-enclosure {
+  transform: scaleX(-1);
 }
